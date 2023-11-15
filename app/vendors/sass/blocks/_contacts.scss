@@ -1,0 +1,39 @@
+.contacts{
+    margin-top: 80px;
+}
+
+.contacts-title{
+    margin-bottom: 40px;
+}
+
+.contacts-list{
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 30px;
+}
+
+.contacts-item-title{
+    font-size: 18px;
+}
+
+
+.contacts-li-icon{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    &:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.contacts-li-icon img{
+    margin-right: 10px;
+
+    @media (max-width: 700px) {
+        display: none;
+    }
+}

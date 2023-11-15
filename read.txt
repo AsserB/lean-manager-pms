@@ -1,0 +1,23 @@
+Список ролей
+
+1/ Администратор (‘administrator’) – Роль, у которой есть доступ ко всем функциям администрирования на одном сайте.
+
+2/ Проект-менеджер (‘project-manager’) – Роль, которая может публиковать и управлять проектами.
+
+3/ Подписчик (‘subscriber’) – Роль, которая может управлять только своим профилем.
+
+
+
+Done! Congratulations on your new bot. You will find it at t.me/leanMbot. You can now add a description, 
+about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, 
+ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+6726490085:AAFj2y39Ca4Y5meUiTJH7Z5hbjzXYC0z938
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+
+https://t.me/leanMbot
+
+@leanMbot

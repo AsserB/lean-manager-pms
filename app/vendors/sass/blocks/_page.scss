@@ -1,0 +1,17 @@
+.page{
+    display: flex;
+    justify-content: center;
+
+    /* Tablet */
+    @media (max-width: 1199px) {
+    }
+
+    /* Mobile */
+    @media (max-width: 899px) {
+        display: block;
+    }
+
+    /* Mobile XS */
+    @media (max-width: 599px) {
+    }
+}

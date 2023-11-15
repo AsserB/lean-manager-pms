@@ -1,0 +1,36 @@
+.comments{
+    width: 50%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.comment__title{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.comment__textarea{
+    margin-top: 10px;
+    border: 1px solid #4b5563;
+    border-radius: 5px;
+}
+
+.comment__button{
+    margin-top: 10px;
+}
+
+.comment__btn{
+    padding: 5px;
+    background-color: #FF4500;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 500;
+
+    &:hover{
+        background-color: #FF4500 !important;
+    }
+}

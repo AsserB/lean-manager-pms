@@ -1,0 +1,36 @@
+//fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+// Base
+@import "./base/reset";
+@import "./base/base";
+
+// Blocks
+@import "./blocks/page";
+@import "./blocks/aside";
+@import "./blocks/content";
+@import "./blocks/form";
+@import "./blocks/header";
+@import "./blocks/card";
+@import "./blocks/form-project";
+@import "./blocks/main-index";
+@import "./blocks/contacts";
+@import "./blocks/dashboards";
+@import "./blocks/layout";
+
+//Plugins
+@import "./plugins/scroll";
+@import "./plugins/text";
+@import "./plugins/table";
+@import "./plugins/btn";
+@import "./plugins/accardion";
+@import "./plugins/comments";
+@import "./plugins/courses";
+@import "./plugins/modal";
+@import "./plugins/profile";
+@import "./plugins/report-table";
+
+
+
+//Pages
+@import "./pages/users";
