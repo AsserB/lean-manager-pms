@@ -13,9 +13,16 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : false;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Title and SEO -->
-    <title>Бережливый менеджер</title>
-    <meta name="description" content="Бережливый менеджер эффективное управление проектами">
-    <meta name="keywords" content="ключевые слова, фразы">
+    <title>Бережливый менеджер - система управления проектами</title>
+    <meta name="description" content="Бережливый менеджер - система управления проектами, обеспечивающая эффективное использование ресурсов и сбережение. 
+    Минимизация потерь и прозрачная модерация на всех этапах работы.">
+    <meta name="keywords" content="бережливый менеджер система управления проектами проектное управление эффективный регион комфортный колледж бережливое производство lean manager">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Бережливый менеджер - система управления проектами">
+    <meta property="og:url" content="https://lean-manager.ru/">
+    <meta property="og:image" content="https://i.postimg.cc/HW5SxnhJ/16-11-2023-144359.jpg">
+    <meta property="og:description" content="Бережливый менеджер - система управления проектами, обеспечивающая эффективное использование ресурсов и сбережение. Минимизация потерь и прозрачная модерация на всех этапах работы.">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
 

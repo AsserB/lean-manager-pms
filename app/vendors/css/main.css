@@ -1825,6 +1825,40 @@ ol {
   overflow-x: hidden;
 }
 
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter__title {
+  font-size: 16px;
+}
+
+.filter_list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 15px;
+     -moz-column-gap: 15px;
+          column-gap: 15px;
+}
+
+.filter_status {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid #4054b2;
+  border-radius: 5px;
+  padding: 3px;
+  font-weight: 500;
+  color: #000;
+}
+.filter_status::after {
+  content: url("/app/vendors/img/icon/arrow-down.png");
+}
+
 .users-header {
   margin-bottom: 30px;
   display: -webkit-box;

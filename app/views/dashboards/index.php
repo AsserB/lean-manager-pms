@@ -1,3 +1,16 @@
+<!-- Title and SEO -->
+<title>Аналитика по бережливым технологиям в образовании</title>
+<meta name="description" content="Бережливый менеджер - система управления проектами, обеспечивающая эффективное использование ресурсов и сбережение. 
+    Минимизация потерь и прозрачная модерация на всех этапах работы.">
+<meta name="keywords" content="бережливый менеджер система управления проектами проектное управление эффективный регион комфортный колледж бережливое производство lean manager">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Бережливый менеджер - система управления проектами">
+<meta property="og:url" content="https://lean-manager.ru/">
+<meta property="og:image" content="https://i.postimg.cc/HW5SxnhJ/16-11-2023-144359.jpg">
+<meta property="og:description" content="Бережливый менеджер - система управления проектами, обеспечивающая эффективное использование ресурсов и сбережение. Минимизация потерь и прозрачная модерация на всех этапах работы.">
+
+
 <?php
 // http://leanmanager/index.php?page=pages
 ob_start();

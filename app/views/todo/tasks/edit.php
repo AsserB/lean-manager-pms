@@ -1,3 +1,16 @@
+<!-- Title and SEO -->
+<title>Редактировать проект по бережливому производству</title>
+<meta name="description" content="Бережливый менеджер - система управления проектами, обеспечивающая эффективное использование ресурсов и сбережение. 
+    Минимизация потерь и прозрачная модерация на всех этапах работы.">
+<meta name="keywords" content="бережливый менеджер система управления проектами проектное управление эффективный регион комфортный колледж бережливое производство lean manager">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Бережливый менеджер - система управления проектами">
+<meta property="og:url" content="https://lean-manager.ru/">
+<meta property="og:image" content="https://i.postimg.cc/HW5SxnhJ/16-11-2023-144359.jpg">
+<meta property="og:description" content="Бережливый менеджер - система управления проектами, обеспечивающая эффективное использование ресурсов и сбережение. Минимизация потерь и прозрачная модерация на всех этапах работы.">
+
+
 <?php
 // http://leanmanager/index.php?page=roles&action=create
 ob_start();
@@ -143,7 +156,7 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : false;
 
 <div class="modal__window">
     <div class="modal__main">
-        <h2 class="modal__title">Инсторукция по заполнению паспорта проекта</h2>
+        <h2 class="modal__title">Инструкция по заполнению паспорта проекта</h2>
         <div class="modal__container">
             <ol>
                 <li>
@@ -154,7 +167,7 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : false;
                 </li>
             </ol>
         </div>
-        <h2 class="modal__title">Инсторукция по оформлению презентации проекта</h2>
+        <h2 class="modal__title">Инструкция по оформлению презентации проекта</h2>
         <div class="modal__container">
             <ol>
                 <li>
