@@ -95,6 +95,54 @@ class TaskModel
         }
     }
 
+    public function getTasksByTypeOrg($taskOrgType)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM todo_list WHERE job_place = ?");
+            $stmt->execute([$taskOrgType]);
+            $todo_list = [];
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $todo_list[] = $row;
+            }
+            return $todo_list ? $todo_list : [];
+        } catch (\PDOException $e) {
+            return [];
+        }
+    }
+
+    public function getTasksByTypeProjects($taskType)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM todo_list WHERE category_id = ? OR category_id Like 'Конкурс%'");
+            $stmt->execute([$taskType]);
+            $todo_list = [];
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $todo_list[] = $row;
+            }
+            return $todo_list ? $todo_list : [];
+        } catch (\PDOException $e) {
+            return [];
+        }
+    }
+
+
+    // Фильтрация проектов по дате создания
+    public function getTasksByDateBetween($startDate, $endDate)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM todo_list WHERE created_at BETWEEN ? AND ?");
+            $stmt->execute([$startDate], [$endDate]);
+            $todo_list = [];
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $todo_list[] = $row;
+            }
+            return $todo_list ? $todo_list : [];
+        } catch (\PDOException $e) {
+            return [];
+        }
+    }
+
+
     public function getAllTasksByIdUser($user_id)
     {
         try {

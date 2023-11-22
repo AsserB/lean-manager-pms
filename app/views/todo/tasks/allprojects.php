@@ -22,11 +22,47 @@ ob_start();
 <!-- <div class="filter">
     <h2 class="filter__title">Сортировать по:</h2>
     <ul class="filter_list">
-        <li class="filter_status">типу проектов</li>
+        <li class="filter_status">
+            <a id="sort-button-project">типу проектов</a>
+            <div class="filter-project-content hide-content" id="filter-project-content">
+                <a data-projetcs-type="Эффективный регион" class="filter-button">Эффективный регион</a>
+                <a data-projetcs-type="Комфортная школа" class="filter-button">Комфортная школа</a>
+                <a data-projetcs-type="Лидер бережливости" class="filter-button">Лидер бережливости</a>
+            </div>
+        </li>
     </ul>
+
 </div> -->
 
+
+
 <ol class="accordion" id="tasks-accordion">
+
+
+
+    <form method="POST" action="/todo/tasks/allprojects" class="filter">
+        <label for="taskType">Категория проекта</label>
+        <select class="form-select mb-2" id="taskType" name="taskType">
+            <option value="">Выберите категорию проекта</option>
+            <option value="Все проекты" <?php if (isset($_POST['taskType']) && $_POST['taskType'] == 'Все проекты') {
+                                            echo 'selected="selected"';
+                                        } ?>>Все проекты</option>
+            <option value="Эффективный регион" <?php if (isset($_POST['taskType']) && $_POST['taskType'] == 'Эффективный регион') {
+                                                    echo 'selected="selected"';
+                                                }  ?>>Эффективный регион</option>
+            <option value="Комфортная школа" <?php if (isset($_POST['taskType']) && $_POST['taskType'] == 'Комфортная школа') {
+                                                    echo 'selected="selected"';
+                                                } ?>>Комфортная школа</option>
+            <option value="Лидер бережливости" <?php if (isset($_POST['taskType']) && $_POST['taskType'] == 'Лидер бережливости') {
+                                                    echo 'selected="selected"';
+                                                } ?>>Конкурс "Лидер бережливости"</option>
+        </select>
+        <label for="taskOrgType">Организации</label>
+        <div class="form-button">
+            <button type="submit" class="button">Применить фильтр</button>
+        </div>
+    </form>
+
     <?php foreach ($tasks as $oneTask) : ?>
 
         <?php
@@ -153,6 +189,11 @@ ob_start();
 
     updateRemainingTime();
     setInterval(updateRemainingTime, 7200000); // Update every minute
+</script>
+
+
+<script>
+    let projectType = "<?= $oneTask['category_id'] ?>";
 </script>
 
 <?php $content = ob_get_clean();

@@ -34,9 +34,11 @@ ob_start();
         <button type="submit" class="button">Зарегистрироваться</button>
     </div>
 
+    <div class="form-info policy-info">
+        <p>Создавая аккаунт, я соглашаюсь
+            c <a class="text-primary" href="/info/policy">"политикой обработки и хранения персональных данных"</a> и <a class="text-primary" href="/info/useragreement">"пользовательским соглашением"</a></p>
+    </div>
     <div class="form-info">
-        <p>Нажимая кнопку "Зарегистрироваться", Вы соглашаетесь
-            c условиями <a class="text-primary" href="/info/policy">"политики конфиденциальности"</a></p>
         <p>Если у вас уже есть аккаунт
             <a href="/auth/login"><?= htmlspecialchars("Авторизация") ?></a>
         </p>

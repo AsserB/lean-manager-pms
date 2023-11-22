@@ -29,13 +29,31 @@ class TaskController
         include 'app/views/todo/tasks/index.php';
     }
 
-    public function allProjects()
+    public function taskFilter($taskType, $taskOrgType)
     {
-
         $taskModel = new TaskModel();
-        $tasks = $taskModel->getAllTasks();
+        if ($taskType == 'Все проекты') {
+            $tasks = $taskModel->getAllTasks();
+        } else if ($taskType) {
+            $tasks = $taskModel->getTasksByTypeProjects($taskType);
+        } else {
+            $tasks = $taskModel->getAllTasks();
+        }
+
+        if ($taskOrgType) {
+            $tasks = $taskModel->getTasksByTypeOrg($taskOrgType);
+        }
 
         include 'app/views/todo/tasks/allprojects.php';
+        return $tasks;
+    }
+
+    public function allprojects()
+    {
+        $taskType = isset($_POST['taskType']) ? filter_var($_POST['taskType'], FILTER_SANITIZE_STRING) : null;
+        $taskOrgType = isset($_POST['taskOrgType']) ? filter_var($_POST['taskOrgType'], FILTER_SANITIZE_STRING) : null;
+
+        $this->taskFilter($taskType, $taskOrgType);
     }
 
     public function myProject()

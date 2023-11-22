@@ -14,6 +14,7 @@
 .filter_status{
     display: flex;
     align-items: center;
+    column-gap: 5px;
 
     border: 1px solid #4054b2;
     border-radius: 5px;
@@ -22,8 +23,37 @@
     font-weight: 500;
     color: #000;
 
+    cursor: pointer;
+
+
 
     &::after{
         content: url('/app/vendors/img/icon/arrow-down.png');
+    }
+}
+
+.filter-project-content {
+padding: 10px;
+
+top: 190;
+left: auto;
+
+display: flex;
+flex-direction: column;
+background-color: #fff;
+position: absolute;
+z-index: 3;
+
+row-gap: 10px;
+
+&.hide-content {
+    display: none;
+}
+}
+
+.filter-button{
+    &:hover{
+        background-color: #c9c9c9;
+        cursor: pointer;
     }
 }
