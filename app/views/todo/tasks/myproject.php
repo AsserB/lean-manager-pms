@@ -118,6 +118,24 @@ ob_start();
                             </div>
                         </div>
                     </div>
+
+                    <div class="comments">
+                        <div class="comment__title">
+                            <img src="/app/vendors/img/icon/comment.png" alt="Иконка комментария">
+                            <h3>Замечания к проекту:</h3>
+                        </div>
+
+                        <ol>
+                            <?php foreach ($comments as $comment) : ?>
+                                <?php if ($comment['task_id'] == $oneTask['id']) : ?>
+                                    <li class="comments-item"><?php echo htmlspecialchars($comment['username']); ?>:
+                                        <?php echo htmlspecialchars($comment['title']); ?>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ol>
+                    </div>
+
                     <div class="d-flex justify-content-end">
                         <a href="/todo/tasks/edit/<?php echo $oneTask['id']; ?>" class="btn btn-primary me-2">Редактировать</a>
                     </div>

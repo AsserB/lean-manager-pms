@@ -5,6 +5,7 @@ namespace controllers\todo\tasks;
 use models\todo\tasks\TaskModel;
 use models\todo\tasks\TagsModel;
 use models\todo\category\CategoryModel;
+use models\comments\commentsModel;
 use models\Check;
 use models\users\User;
 
@@ -60,6 +61,9 @@ class TaskController
     {
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
+        $commentsModel = new commentsModel();
+        $comments = $commentsModel->getAllComments();
+
         $taskModel = new TaskModel();
         $userTask = $taskModel->getAllTasksByIdUser($user_id);
 
@@ -89,6 +93,9 @@ class TaskController
     public function expired()
     {
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $commentsModel = new commentsModel();
+        $comments = $commentsModel->getAllComments();
 
         $taskModel = new TaskModel();
         $expiredTasks = $taskModel->getAllExpiredTasksByIdUser($user_id);
@@ -201,24 +208,24 @@ class TaskController
             $data['photo_after'] = trim($_POST['photo_after']);
             $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
-            // Обработка даты окончания и напоминания
-            $finish_date_value = $data['finish_date'];
-            $reminder_at_option = $data['reminder_at'];
-            $finish_date = new \DateTime($finish_date_value);
+            // // Обработка даты окончания и напоминания
+            // $finish_date_value = $data['finish_date'];
+            // $reminder_at_option = $data['reminder_at'];
+            // $finish_date = new \DateTime($finish_date_value);
 
-            switch ($reminder_at_option) {
-                case 'month':
-                    $interval = new \DateInterval('P30D');
-                    break;
-                case 'week':
-                    $interval = new \DateInterval('P7D');
-                    break;
-                case 'day':
-                    $interval = new \DateInterval('P1D');
-                    break;
-            }
-            $reminder_at = $finish_date->sub($interval);
-            $data['reminder_at'] = $reminder_at->format('Y-m-d');
+            // switch ($reminder_at_option) {
+            //     case 'month':
+            //         $interval = new \DateInterval('P30D');
+            //         break;
+            //     case 'week':
+            //         $interval = new \DateInterval('P7D');
+            //         break;
+            //     case 'day':
+            //         $interval = new \DateInterval('P1D');
+            //         break;
+            // }
+            // $reminder_at = $finish_date->sub($interval);
+            // $data['reminder_at'] = $reminder_at->format('Y-m-d');
 
             $taskModel = new TaskModel();
             $taskModel->updateTask($data);

@@ -118,6 +118,7 @@ ob_start();
                             </div>
                         </div>
                     </div>
+
                     <div class="d-flex justify-content-end">
                         <a href="/todo/tasks/edit/<?php echo $oneTask['id']; ?>" class="btn btn-primary me-2">Редактировать</a>
                     </div>

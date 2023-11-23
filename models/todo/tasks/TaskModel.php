@@ -125,7 +125,6 @@ class TaskModel
         }
     }
 
-
     // Фильтрация проектов по дате создания
     public function getTasksByDateBetween($startDate, $endDate)
     {

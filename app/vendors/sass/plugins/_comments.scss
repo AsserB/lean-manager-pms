@@ -1,7 +1,8 @@
 .comments{
-    width: 50%;
+    width: 30%;
     padding-top: 5px;
     padding-bottom: 5px;
+    border-radius: 10px;
 }
 
 .comment__title{
@@ -11,6 +12,14 @@
 
     font-weight: 500;
     font-size: 16px;
+
+    margin-bottom: 15px;
+}
+
+.comments-item{
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #000;
 }
 
 .comment__textarea{
@@ -34,3 +43,4 @@
         background-color: #FF4500 !important;
     }
 }
+
