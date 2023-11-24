@@ -408,6 +408,7 @@ body {
 @media (max-width: 500px) {
   .form-fields {
     font-size: 12px;
+    width: 100%;
   }
 }
 
@@ -605,17 +606,16 @@ textarea {
           align-items: center;
 }
 
-@media (max-width: 600px) {
-  .header-nav {
-    display: none;
-  }
-}
-
 .header-nav__links {
   padding-right: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+@media (max-width: 800px) {
+  .header-nav__links a {
+    display: none;
+  }
 }
 
 .header-nav__links li {
@@ -681,7 +681,7 @@ textarea {
 }
 @media (max-width: 600px) {
   .auth {
-    display: none;
+    font-size: 12px;
   }
 }
 

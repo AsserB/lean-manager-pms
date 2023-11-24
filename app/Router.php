@@ -18,6 +18,7 @@ class Router
         '/^\/todo\/tasks(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'todo\tasks\\TaskController'],
         '/^\/todo\/tasks\/update-moderation(\/(?P<id>\d+))?$/' => ['controller' => 'todo\tasks\\TaskController', 'action' => 'updateStatus'],
         '/^\/dashboards(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'dashboards\\dashboardsController'],
+        '/^\/ppu(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'ppu\\ppuController'],
     ];
 
     public function run()
