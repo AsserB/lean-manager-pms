@@ -2,6 +2,7 @@
 
 namespace controllers\todo\comments;
 
+use Exception;
 use models\todo\tasks\TaskModel;
 use models\todo\tasks\TagsModel;
 use models\todo\category\CategoryModel;
@@ -45,17 +46,21 @@ class commentsController
     {
         //$this->check->requirePermission();
 
-        if (isset($_POST['title'])) {
-            $data['title'] = trim($_POST['title']);
-            $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
-            $data['task_id'] = $_POST['task_id'];
+        if (!isset($_POST['comment_text'])) { // Проверка наличия поля 'comment'
+            echo "Отсутствует комментарий";
+            return;
+        }
 
+        $data['comment_text'] = trim($_POST['comment_text']);
+        $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+        $data['task_id'] = $_POST['task_id'];
 
-            if (!isset($_POST['title'])) { // Проверка наличия поля 'comment'
-                echo "Отсутствует комментарий";
-                return;
-            }
+        // Валидация и очистка входных данных
+        $data['comment_text'] = filter_var($data['comment_text'], FILTER_SANITIZE_STRING);
+        $data['user_id'] = filter_var($data['user_id'], FILTER_VALIDATE_INT);
+        $data['task_id'] = filter_var($data['task_id'], FILTER_VALIDATE_INT);
 
+        try {
             $commentsModel = new commentsModel();
             $commentsModel->createComments($data);
 
@@ -63,18 +68,26 @@ class commentsController
             $tasks = $taskModel->getAllTasks();
 
             $leadEmail = $_POST['lead_email'];
+            $TaskTitle = $_POST['title'];
 
-            $to = $leadEmail;
-            $subject = 'Замечание к проекты';
-            $message = 'Новое замечание' . ' ' . $_POST['title'];
+            // Валидация и очистка входных данных
+            $leadEmail = filter_var($leadEmail, FILTER_SANITIZE_EMAIL);
+            $TaskTitle = filter_var($TaskTitle, FILTER_SANITIZE_STRING);
+
+
+            $to = $_POST['lead_email'];
+            $subject = 'Замечание к проекту';
+            $message = 'Новое замечание к проекту ' . $TaskTitle . ': ' . $_POST['comment_text'];
             $headers = 'From: lean-manager.ru' . "\r\n" .
                 'Reply-To: webmaster@example.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
             mail($to, $subject, $message, $headers);
+        } catch (Exception $e) {
+            echo 'Произошла ошибка при создании комментария или отправке электронной почты: ' . $e->getMessage();
+            return;
         }
-
-        header("Location:  /todo/tasks/expired"); // Перенаправление на страницу с проектом expired
+        header("Location:  /todo/tasks/onchek"); // Перенаправление на страницу с проектом expired
     }
 
     public function delete($params)
@@ -84,6 +97,6 @@ class commentsController
         $commentsModel = new commentsModel();
         $commentsModel->delete($params['id']);
 
-        header("Location:  /todo/tasks/expired");
+        header("Location:  /todo/tasks/onchek");
     }
 }

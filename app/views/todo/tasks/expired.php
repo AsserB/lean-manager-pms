@@ -128,7 +128,7 @@ ob_start();
                             <?php foreach ($comments as $comment) : ?>
                                 <?php if ($comment['task_id'] == $oneTask['id']) : ?>
                                     <li class="comments-item"><?php echo htmlspecialchars($comment['username']); ?>:
-                                        <?php echo htmlspecialchars($comment['title']); ?>
+                                        <?php echo htmlspecialchars($comment['comment_text']); ?>
                                         <a class="red" onclick="return confirm('Вы уверены в этом')" href="/todo/comments/delete/<?php echo $comment['id']; ?>">Удалить</a>
                                     </li>
                                 <?php endif; ?>
@@ -138,7 +138,8 @@ ob_start();
                         <form class="comment" method="POST" action="/todo/comments/store">
                             <input type="hidden" name="task_id" value="<?= $oneTask['id'] ?>">
                             <input type="hidden" name="lead_email" value="<?= $oneTask['lead_email'] ?>">
-                            <textarea class="comment__textarea" name="title" id="title" cols="60" rows="1"></textarea>
+                            <input type="hidden" name="title" value="<?= $oneTask['title'] ?>">
+                            <textarea class="comment__textarea" name="comment_text" id="comment_text" cols="60" rows="1"></textarea>
                             <div class="comment__button">
                                 <button type="submit" class="comment__btn">Добавить комментарий</button>
                             </div>

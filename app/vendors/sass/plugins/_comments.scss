@@ -1,8 +1,23 @@
 .comments{
     width: 30%;
-    padding-top: 5px;
+    padding: 10px;
     padding-bottom: 5px;
     border-radius: 10px;
+    margin-left: 10px;
+
+    @media (max-width: 1000px) {
+        font-size: 14px;
+     }
+
+     @media (max-width: 800px) {
+        font-size: 12px;
+        width: 100%;
+        margin-bottom: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+     }
 }
 
 .comment__title{

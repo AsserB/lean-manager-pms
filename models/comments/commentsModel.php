@@ -28,7 +28,7 @@ class commentsModel
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `user_id` INT(11) NOT NULL,
             `task_id` INT(11) NOT NULL,
-            `title` VARCHAR(255) NOT NULL,
+            `comment_text` VARCHAR(255) NOT NULL,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY (task_id) REFERENCES todo_list(id)
         )";
@@ -60,12 +60,12 @@ class commentsModel
     public function createComments($data)
     {
 
-        $query = "INSERT INTO comment (user_id, task_id, title) VALUES (?, ?, ?)";
+        $query = "INSERT INTO comment (user_id, task_id, comment_text) VALUES (?, ?, ?)";
 
         try {
 
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$data['user_id'], $data['task_id'], $data['title']]);
+            $stmt->execute([$data['user_id'], $data['task_id'], $data['comment_text']]);
             return true;
         } catch (\PDOException $e) {
             return false;

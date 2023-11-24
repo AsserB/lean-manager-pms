@@ -129,7 +129,7 @@ ob_start();
                             <?php foreach ($comments as $comment) : ?>
                                 <?php if ($comment['task_id'] == $oneTask['id']) : ?>
                                     <li class="comments-item"><?php echo htmlspecialchars($comment['username']); ?>:
-                                        <?php echo htmlspecialchars($comment['title']); ?>
+                                        <?php echo htmlspecialchars($comment['comment_text']); ?>
                                     </li>
                                 <?php endif; ?>
                             <?php endforeach; ?>

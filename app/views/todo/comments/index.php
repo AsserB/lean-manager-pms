@@ -26,7 +26,7 @@ ob_start();
                 <td><?php echo $comment['id']; ?></td>
                 <td><?php echo $comment['username']; ?></td>
                 <td><?php echo $comment['task_id']; ?></td>
-                <td><?php echo $comment['title']; ?></td>
+                <td><?php echo $comment['comment_text']; ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

@@ -72,7 +72,12 @@ class TaskController
 
     public function onChek()
     {
+        $this->check->requirePermission();
+
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $commentsModel = new commentsModel();
+        $comments = $commentsModel->getAllComments();
 
         $taskModel = new TaskModel();
         $onChektasks = $taskModel->getAllOnChekTasksByIdUser($user_id);
@@ -83,6 +88,9 @@ class TaskController
     public function completed()
     {
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $commentsModel = new commentsModel();
+        $comments = $commentsModel->getAllComments();
 
         $taskModel = new TaskModel();
         $completedTasks = $taskModel->getAllCompletedTasksByIdUser($user_id);
@@ -208,30 +216,44 @@ class TaskController
             $data['photo_after'] = trim($_POST['photo_after']);
             $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
-            // // Обработка даты окончания и напоминания
-            // $finish_date_value = $data['finish_date'];
-            // $reminder_at_option = $data['reminder_at'];
-            // $finish_date = new \DateTime($finish_date_value);
-
-            // switch ($reminder_at_option) {
-            //     case 'month':
-            //         $interval = new \DateInterval('P30D');
-            //         break;
-            //     case 'week':
-            //         $interval = new \DateInterval('P7D');
-            //         break;
-            //     case 'day':
-            //         $interval = new \DateInterval('P1D');
-            //         break;
-            // }
-            // $reminder_at = $finish_date->sub($interval);
-            // $data['reminder_at'] = $reminder_at->format('Y-m-d');
-
             $taskModel = new TaskModel();
-            $taskModel->updateTask($data);
+            $currentData = $taskModel->getTaskByID($data['id']); // Получаем текущие данные из базы данных
+            //$taskModel->updateTask($data);
+
+            $changedFields = array();
+            foreach ($data as $key => $value) {
+                if ($currentData[$key] != $value) {
+                    $changedFields[$key] = array(
+                        'old' => $currentData[$key],
+                        'new' => $value
+                    );
+                }
+            }
+
+            if (!empty($changedFields)) {
+                $taskModel->updateTask($data);
+
+                $to = 'rcbt-irpo@mail.ru';
+                $subject = 'Обновление проекта';
+                $message = 'Обновление в проекте ' . $data['title'] . "\n";
+                foreach ($changedFields as $field => $values) {
+                    $message .= $field . ' изменилось с ' . $values['old'] . ' на ' . $values['new'] . "\n";
+                }
+                $headers = 'From: lean-manager.ru' . "\r\n" .
+                    'Reply-To: webmaster@example.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+                mail($to, $subject, $message, $headers);
+            }
         }
 
-        header("Location: /todo/tasks/allprojects");
+        if ($_SESSION['user_role'] == '5' || $_SESSION['user_role'] == '3') {
+            // Перенаправление на страницу '/todo/tasks/onchek'
+            header('Location: /todo/tasks/onchek');
+        } else {
+            // Перенаправление на другую страницу
+            header('Location: /todo/tasks/myproject');
+        }
     }
 
     public function task($params)

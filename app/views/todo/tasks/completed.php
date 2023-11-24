@@ -51,7 +51,8 @@ ob_start();
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#task-collapse-<?php echo $oneTask['id']; ?>" aria-expanded="false" aria-controls="task-collapse-<?php echo $oneTask['id']; ?>">
                         <span class="accordion-header-item"><strong><?php echo $oneTask['title']; ?></strong></span>
                         <span class="accordion-header-item accardion-header-item-hide"><strong>Статус проекта:</strong><span style="background-color: <?= $statusColor ?>;" class="span-border"><?php echo $oneTask['status']; ?></span></span>
-                        <span class="accordion-header-item"><strong class="accordion-header-item-moderation">Статус модерации:</strong><span style="background-color: <?= $moderationColor ?>;" class="span-border"><?php echo $oneTask['moderation']; ?></span></span>
+                        <span class="accordion-header-item"><strong class="accordion-header-item-moderation">Статус
+                                модерации:</strong><span style="background-color: <?= $moderationColor ?>;" class="span-border"><?php echo $oneTask['moderation']; ?></span></span>
                         <span class="accordion-header-item accardion-header-item-hide"><strong>Срок проекта:</strong> <span class="due-date"><?php echo $oneTask['finish_date']; ?></span></span>
                     </button>
                 </h2>
@@ -61,7 +62,8 @@ ob_start();
                     <div class="accordion-body-row">
                         <div class="accordion-body-row">
                             <div class="row row-one">
-                                <p><strong>Подпроект:</strong> <?php echo htmlspecialchars($oneTask['category_id'] ?? 'N/A'); ?>
+                                <p><strong>Подпроект:</strong>
+                                    <?php echo htmlspecialchars($oneTask['category_id'] ?? 'N/A'); ?>
                                 </p>
                                 <p><strong>Название проекта:</strong>
                                     <?php echo htmlspecialchars($oneTask['title'] ?? 'N/A'); ?>
@@ -71,7 +73,8 @@ ob_start();
                                 </p>
                                 <p><strong>Название организации:</strong>
                                     <?php echo htmlspecialchars($oneTask['job_place'] ?? 'N/A'); ?></p>
-                                <p><strong>Заказчик:</strong> <?php echo htmlspecialchars($oneTask['customer'] ?? 'N/A'); ?></p>
+                                <p><strong>Заказчик:</strong> <?php echo htmlspecialchars($oneTask['customer'] ?? 'N/A'); ?>
+                                </p>
                                 <p><strong>Руководитель проекта:</strong>
                                     <?php echo htmlspecialchars($oneTask['team_lead'] ?? 'N/A'); ?>
                                 </p>
@@ -87,7 +90,8 @@ ob_start();
                                 <p><strong>Дата открытия проекта:</strong>
                                     <?php echo htmlspecialchars($oneTask['start_date']); ?>
                                 </p>
-                                <p><strong>Дата Кик-офф:</strong> <?php echo htmlspecialchars($oneTask['kick_off_date']); ?></p>
+                                <p><strong>Дата Кик-офф:</strong> <?php echo htmlspecialchars($oneTask['kick_off_date']); ?>
+                                </p>
                                 <p><strong>Дата завершения проекта:</strong>
                                     <?php echo htmlspecialchars($oneTask['finish_date']); ?>
                                 </p>
@@ -117,24 +121,34 @@ ob_start();
                             </div>
                         </div>
                     </div>
-                    <!-- <p class="moderation-btn-title">Выберите статус модерации:</p>
-                <div class="moderation-btn">
-                    <form action="/todo/tasks/update-moderation/<?php echo $oneTask['id']; ?>"
-                        method="POST">
-                        <input type="hidden" name="moderation" value="Проект на проверке">
-                        <button type="submit" class="moderation-new">Проект на проверке</button>
-                    </form>
-                    <form action="/todo/tasks/update-moderation/<?php echo $oneTask['id']; ?>"
-                        method="POST">
-                        <input type="hidden" name="moderation" value="Проект не доделан">
-                        <button type="submit" class="moderation-error">Проект не доделан</button>
-                    </form>
-                    <form action="/todo/tasks/update-moderation/<?php echo $oneTask['id']; ?>"
-                        method="POST">
-                        <input type="hidden" name="moderation" value="Проект проверен">
-                        <button type="submit" class="moderation-cheked">Проект проверен</button>
-                    </form>
-                </div>-->
+
+                    <div class="comments">
+                        <div class="comment__title">
+                            <img src="/app/vendors/img/icon/comment.png" alt="Иконка комментария">
+                            <h3>Замечания к проекту:</h3>
+                        </div>
+
+                        <ol>
+                            <?php foreach ($comments as $comment) : ?>
+                                <?php if ($comment['task_id'] == $oneTask['id']) : ?>
+                                    <li class="comments-item"><?php echo htmlspecialchars($comment['username']); ?>:
+                                        <?php echo htmlspecialchars($comment['comment_text']); ?>
+                                        <a class="red" onclick="return confirm('Вы уверены в этом')" href="/todo/comments/delete/<?php echo $comment['id']; ?>">Удалить</a>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ol>
+
+                        <form class="comment" method="POST" action="/todo/comments/store">
+                            <input type="hidden" name="task_id" value="<?= $oneTask['id'] ?>">
+                            <input type="hidden" name="lead_email" value="<?= $oneTask['lead_email'] ?>">
+                            <input type="hidden" name="title" value="<?= $oneTask['title'] ?>">
+                            <textarea class="comment__textarea" name="comment_text" id="comment_text" cols="60" rows="1"></textarea>
+                            <div class="comment__button">
+                                <button type="submit" class="comment__btn">Добавить комментарий</button>
+                            </div>
+                        </form>
+                    </div>
 
                     <div class="d-flex justify-content-end">
                         <a href="/todo/tasks/edit/<?php echo $oneTask['id']; ?>" class="btn btn-primary me-2">Редактировать</a>

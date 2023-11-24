@@ -1555,9 +1555,32 @@ ol {
 
 .comments {
   width: 30%;
-  padding-top: 5px;
+  padding: 10px;
   padding-bottom: 5px;
   border-radius: 10px;
+  margin-left: 10px;
+}
+@media (max-width: 1000px) {
+  .comments {
+    font-size: 14px;
+  }
+}
+@media (max-width: 800px) {
+  .comments {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 
 .comment__title {

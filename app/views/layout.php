@@ -27,7 +27,7 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : false;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/app/vendors/css/main.css?ver=19">
+    <link rel="stylesheet" href="/app/vendors/css/main.css?ver=20">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/app/vendors/img/favicon/favicon-32x32.png">

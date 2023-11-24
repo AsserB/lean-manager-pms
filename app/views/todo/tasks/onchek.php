@@ -119,6 +119,34 @@ ob_start();
                         </div>
                     </div>
 
+                    <div class="comments">
+                        <div class="comment__title">
+                            <img src="/app/vendors/img/icon/comment.png" alt="Иконка комментария">
+                            <h3>Замечания к проекту:</h3>
+                        </div>
+
+                        <ol>
+                            <?php foreach ($comments as $comment) : ?>
+                                <?php if ($comment['task_id'] == $oneTask['id']) : ?>
+                                    <li class="comments-item"><?php echo htmlspecialchars($comment['username']); ?>:
+                                        <?php echo htmlspecialchars($comment['comment_text']); ?>
+                                        <a class="red" onclick="return confirm('Вы уверены в этом')" href="/todo/comments/delete/<?php echo $comment['id']; ?>">Удалить</a>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ol>
+
+                        <form class="comment" method="POST" action="/todo/comments/store">
+                            <input type="hidden" name="task_id" value="<?= $oneTask['id'] ?>">
+                            <input type="hidden" name="lead_email" value="<?= $oneTask['lead_email'] ?>">
+                            <input type="hidden" name="title" value="<?= $oneTask['title'] ?>">
+                            <textarea class="comment__textarea" name="comment_text" id="comment_text" cols="50" rows="1"></textarea>
+                            <div class="comment__button">
+                                <button type="submit" class="comment__btn">Добавить комментарий</button>
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="d-flex justify-content-end">
                         <a href="/todo/tasks/edit/<?php echo $oneTask['id']; ?>" class="btn btn-primary me-2">Редактировать</a>
                     </div>
