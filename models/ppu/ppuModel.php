@@ -26,17 +26,14 @@ class ppuModel
 
         $query = "CREATE TABLE IF NOT EXISTS `ppu` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            `user_id` INT(11) NOT NULL,
             `username` VARCHAR(255) NOT NULL,
             `job_title` VARCHAR(255) NOT NULL,
             `job_sp` VARCHAR(255) NOT NULL,
             `ppu_title` VARCHAR(255) NOT NULL,
             `ppu_type` VARCHAR(255) NOT NULL,
             `ppu_description` VARCHAR(255) NOT NULL,
-            `ppu_solution` VARCHAR(255) NOT NULL,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            `ppu_solution` VARCHAR(255) NOT NULL
         )";
-
         try {
             $this->db->exec($query);
             return true;
@@ -70,20 +67,6 @@ class ppuModel
 
             $stmt = $this->db->prepare($query);
             $stmt->execute([$data['username'], $data['job_title'], $data['job_sp'], $data['ppu_title'], $data['ppu_type'], $data['ppu_description'], $data['ppu_solution']]);
-            return true;
-        } catch (\PDOException $e) {
-            return false;
-        }
-    }
-
-    public function delete($id)
-    {
-        $query = "DELETE FROM ppu WHERE id= ?";
-
-        try {
-
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([$id]);
             return true;
         } catch (\PDOException $e) {
             return false;

@@ -62,9 +62,17 @@ class User
             FOREIGN KEY (`role`) REFERENCES `roles` (`id`)
             )";
 
+        $tempPasswordsTableQuery = "CREATE TABLE IF NOT EXISTS `temp_passwords` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT,
+            temp_password VARCHAR(255),
+            created_at DATETIME
+            )";
+
         try {
             $this->db->exec($roleTableQuery);
             $this->db->exec($userTableQuery);
+            $this->db->exec($tempPasswordsTableQuery);
 
             //Вставка записей в таблицу `roles`
             if (!$this->rolesExist()) {
@@ -166,7 +174,7 @@ class User
 
     public function updateProfile($data)
     {
-        $query = "UPDATE users SET username = ?, email = ?, phone_number = ?, job_title = ?, job_place = ? WHERE id = ?";;
+        $query = "UPDATE users SET username = ?, email = ?, phone_number = ?, job_title = ?, job_place = ? WHERE id = ?";
 
         try {
             $stmt = $this->db->prepare($query);
@@ -178,6 +186,94 @@ class User
         }
     }
 
+    public function postTeampPassword($user_id, $tempPassword)
+    {
+        $created_at = date('Y-m-d H:i:s');
+
+        $query = "INSERT INTO temp_passwords (user_id, temp_password, created_at) VALUES (?, ?, ?)";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$user_id, $tempPassword, $created_at]);
+
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function deletePassword($user_id)
+    {
+        $query = "UPDATE users SET password = NULL WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$user_id]);
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+
+    public function getChekTempPassword($data)
+    {
+
+        try {
+            $query = "SELECT * FROM temp_passwords WHERE temp_password = ?";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$data['temp_password']]);
+            $temp_passwords_row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            return  $temp_passwords_row ? $temp_passwords_row : false;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getTempPasswordUserID($data)
+    {
+
+        try {
+            $query = "SELECT user_id FROM temp_passwords WHERE temp_password = ?";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$data['temp_password']]);
+            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function changePassword($data)
+    {
+        try {
+            $query = "UPDATE users SET password = ? WHERE id = ?";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([password_hash($data['password'], PASSWORD_DEFAULT), $data['id']]);
+            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function deleteTempPassword($data)
+    {
+        try {
+            $query = "DELETE FROM temp_passwords WHERE user_id = ?";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$data['id']]);
+            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
 
     //Обновление данных пользователя в SQL с ранее вытянутых данных (вверхний метод) 
     public function update($id, $data)

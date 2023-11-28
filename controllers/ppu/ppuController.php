@@ -8,7 +8,6 @@ use models\Check;
 use models\ppu\ppuModel;
 use models\users\User;
 
-
 class ppuController
 {
 
@@ -32,17 +31,10 @@ class ppuController
 
     public function create()
     {
-
-        // Проверка, зарегистрирован ли пользователь
-        if (!isset($_SESSION['user_id'])) {
-            // Если пользователь не зарегистрирован, перенаправляем его на страницу входа
-            header('Location: /auth/login');
-            exit;
-        }
-
-        //$this->check->requirePermission();
-
         $ppuModel = new ppuModel();
+
+        $userModel = new User();
+        $users = $userModel->readAllUniqueJobPlace();
 
         include 'app/views/ppu/create.php';
     }
@@ -53,7 +45,6 @@ class ppuController
         //$this->check->requirePermission();
 
         if (isset($_POST['username']) && isset($_POST['job_sp']) && isset($_POST['ppu_title'])) {
-            $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
             $data['username'] = trim($_POST['username']);
             $data['job_title'] = trim($_POST['job_title']);
             $data['job_sp'] = trim($_POST['job_sp']);
@@ -65,7 +56,7 @@ class ppuController
             $ppuModel = new ppuModel();
             $ppuModel->createPpu($data);
 
-            $to = 'rcbt-irpo@mail.ru';
+            $to = 'ppu-rcbt@mail.ru';
             $subject = 'Новое ППУ';
             $message = 'ППУ' . ' ' . $_POST['ppu_title'] . ' от ' . $_POST['username'] . ' СП: ' . $_POST['job_sp'];
             $headers = 'From: lean-manager.ru' . "\r\n" .

@@ -15,6 +15,11 @@ ob_start();
             <span>запомнить меня</span>
         </div>
         <div class="form-info">
+            <p>
+                <a href="/auth/recover"><?= htmlspecialchars("Забыли пароль?") ?></a>
+            </p>
+        </div>
+        <div class="form-info">
             <p>Если у вас нет аккаунта то пройти
                 <a href="/auth/register"><?= htmlspecialchars("Регистрацию") ?></a>
             </p>

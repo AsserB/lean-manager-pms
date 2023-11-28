@@ -128,6 +128,65 @@ class UsersController
         header("Location: /users/profile");
     }
 
+    public function recoverpassword()
+    {
+        if (isset($_POST['email'])) {
+            $email = trim($_POST['email']);
+
+            $userModel = new User();
+            $user = $userModel->findByEmail($email);
+
+            if ($user) {
+                // Если пользователь существует, генерируем временный пароль
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $tempPassword = substr(str_shuffle($characters), 0, 6);
+                $user_id = $user['id'];
+
+                // Сохраняем временный пароль в базе данных, связанный с соответствующим пользователем
+                $userModel->postTeampPassword($user_id, $tempPassword);
+
+                $to = $email;
+                $subject = 'Восстановление доступа';
+                $message = 'Ваш код для восстановления пароля: ' . $tempPassword . ' перейдите по ссылке https://lean-manager.ru/auth/changepassword и вставьте полученный код и поменяйте пароль';
+                $headers = 'From: lean-manager.ru' . "\r\n" .
+                    'Reply-To: webmaster@example.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+                mail($to, $subject, $message, $headers);
+            }
+
+            $userModel->deletePassword($user_id);
+        }
+
+        //header("Location: /auth/changepassword");
+        header("Location: /");
+    }
+
+    public function changepassword()
+    {
+        if (isset($_POST['password']) && isset($_POST['temp_password'])) {
+            $data['temp_password'] = trim($_POST['temp_password']);
+
+            $userModel = new User();
+            $temp_passwords_row = $userModel->getChekTempPassword($data);
+
+            if ($temp_passwords_row === false) {
+                echo "вы не правильно ввели Код подтверждения";
+            } else {
+                $userID = $userModel->getTempPasswordUserID($data);
+                $data['password'] = trim($_POST['password']);
+                $data['id'] = $userID['user_id'];
+
+                $userModel->changePassword($data);
+
+                // Удалить строку из таблицы temp_password по id
+                $userModel->deleteTempPassword($data);
+
+                header("Location: /auth/login");
+            }
+        }
+    }
+
     public function update($params)
     {
         $this->check->requirePermission();

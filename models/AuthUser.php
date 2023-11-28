@@ -1,29 +1,33 @@
 <?php
 
 namespace models;
+
 use models\Database;
 
-class AuthUser{
+class AuthUser
+{
     private $db;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->db = Database::getInstance()->getConnection();
 
-        try{
+        try {
             $result = $this->db->query("SELECT 1 FROM `users` LIMIT 1"); //Если таблица существует то получаем результат
-        } catch(\PDOException $e){
+        } catch (\PDOException $e) {
             $this->createTable(); // Если нету такой таблицы то отраьатывает метод создания таблицы
         }
     }
 
     //Метод для создания таблицы
-    public function createTable(){
+    public function createTable()
+    {
         $roleTableQuery = "CREATE TABLE IF NOT EXISTS `roles` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `role_name` VARCHAR(255) NOT NULL,
             `role_description` TEXT
             )";
-        
+
         $userTableQuery = "CREATE TABLE IF NOT EXISTS `users` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `username` VARCHAR(255) NOT NULL,
@@ -41,39 +45,38 @@ class AuthUser{
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY(`id`)
             )";
-        
+
         try {
             $this->db->exec($roleTableQuery);
             $this->db->exec($userTableQuery);
-            
-            return true;
 
+            return true;
         } catch (\PDOException $e) {
 
             return false;
-
         }
     }
 
-    public function register($username, $email, $phone_number, $job_title, $job_place, $org_type, $password){
+    public function register($username, $email, $phone_number, $job_title, $job_place, $org_type, $password)
+    {
 
         $created_at = date('Y-m-d H:i:s');
 
         $query = "INSERT INTO users (username, email, phone_number, job_title, job_place, org_type, password, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try{
+        try {
             $stmt = $this->db->prepare($query);
             $stmt->execute([$username, $email, $phone_number, $job_title, $job_place, $org_type, password_hash($password, PASSWORD_DEFAULT), $created_at]);
             return true;
-
-        } catch(\PDOException $e){
+        } catch (\PDOException $e) {
             return false;
         }
-    }  
+    }
 
-    public function login($email, $password){
+    public function login($email, $password)
+    {
 
-        try{
+        try {
             $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
 
             $stmt = $this->db->prepare($query);
@@ -85,14 +88,15 @@ class AuthUser{
             }
 
             return  false;
-        } catch(\PDOException $e){
+        } catch (\PDOException $e) {
             return false;
         }
     }
 
-    public function findByEmail($email){
+    public function findByEmail($email)
+    {
 
-        try{
+        try {
             $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
 
             $stmt = $this->db->prepare($query);
@@ -100,7 +104,7 @@ class AuthUser{
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             return  $user ? $user : false;
-        } catch(\PDOException $e){
+        } catch (\PDOException $e) {
             return false;
         }
     }

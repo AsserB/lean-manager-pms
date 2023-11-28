@@ -1,3 +1,5 @@
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
 <?php
 // http://leanmanager/index.php?page=roles&action=create
 ob_start();
@@ -6,6 +8,12 @@ ob_start();
 <form class="form" method="POST" action="/ppu/store">
     <h1 class="form-title">Добавить ППУ</h1>
     <div class="form-fields">
+        <!-- <label for="job_place">Выбрать организацию</label>
+        <select class="form-select mb-5" name="job_place" id="job_place">
+            <?php foreach ($users as $user) : ?>
+                <option value="<?= $user['job_place'] ?>"><?= $user['job_place'] ?></option>
+            <?php endforeach; ?>
+        </select> -->
         <label for="ppu_type">ФИО</label>
         <input type="text" placeholder="Мой ответ" id="username" name="username" required>
         <label for="ppu_type">Должность</label>
@@ -34,6 +42,17 @@ ob_start();
         <button type="submit" class="button">Отправить</button>
     </div>
 </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#job_place').select2();
+    });
+</script>
 
 <?php $content = ob_get_clean();
 

@@ -3,18 +3,22 @@
 namespace controllers\auth;
 
 use models\AuthUser;
+use models\users\User;
 
 //--Контроллер для CRUD пользователя--//
-class AuthController{
+class AuthController
+{
 
     //Метод для вывода всех пользователей на странице index
-    public function register(){
+    public function register()
+    {
         include 'app/views/auth/register.php';
     }
 
     //Метод для работы с формой
-    public function store(){
-        if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['phone_number']) && isset($_POST['job_title']) && isset($_POST['job_place']) && isset($_POST['org_type']) && isset($_POST['password']) && isset($_POST['confirm_password'])){
+    public function store()
+    {
+        if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['phone_number']) && isset($_POST['job_title']) && isset($_POST['job_place']) && isset($_POST['org_type']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
             $username = trim(htmlspecialchars($_POST['username']));
             $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
             $phone_number = trim($_POST['phone_number']);
@@ -24,7 +28,7 @@ class AuthController{
             $password = trim($_POST['password']);
             $confirm_password = trim($_POST['confirm_password']);
 
-            
+
             if (empty($username) || empty($email) || empty($phone_number) || empty($job_title) || empty($job_place) || empty($org_type) || empty($password) || empty($confirm_password)) {
                 echo "Не все поля были заполнены";
                 return;
@@ -44,32 +48,34 @@ class AuthController{
     }
 
     //Метод для редактирования пользователя
-    public function login(){
+    public function login()
+    {
         include 'app/views/auth/login.php';
     }
 
     //Метод проверки авторизации
-    public function authenticate(){
+    public function authenticate()
+    {
         $authModel = new AuthUser();
-    
-        if(isset($_POST['email']) && isset($_POST['password'])){
+
+        if (isset($_POST['email']) && isset($_POST['password'])) {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
             $remember = isset($_POST['remember']) ? $_POST['remember'] : '';
-    
+
             $user = $authModel->findByEmail($email);
-            
-            if($user && password_verify($password, $user['password'])) {
+
+            if ($user && password_verify($password, $user['password'])) {
                 //session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_role'] = $user['role'];
                 $_SESSION['user_email'] = $user['email'];
-    
-                if($remember == 'on'){
+
+                if ($remember == 'on') {
                     setcookie('user_email', $email, time() + (7 * 24 * 60 * 60), '/');
                     setcookie('user_password', $password, time() + (7 * 24 * 60 * 60), '/');
                 }
-    
+
                 header("Location: /");
             } else {
                 echo "Не правильно введен пароль или почта";
@@ -77,10 +83,20 @@ class AuthController{
         }
     }
 
-    public function logout(){
+    public function recover()
+    {
+        include 'app/views/auth/recover.php';
+    }
+
+    public function changepassword()
+    {
+        include 'app/views/auth/changepassword.php';
+    }
+
+    public function logout()
+    {
         session_unset();
         session_destroy();
         header("Location:  /"); // Перенаправление на главную страницу
     }
-
 }
